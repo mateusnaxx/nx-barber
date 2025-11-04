@@ -8,16 +8,19 @@ import BarbershopItem from "./_components/barbershop-item";
 
 export default async function Home() {
     const barbershop = await db.barbershop.findMany({});
+    const currentDate = new Date();
     return (
         <div>
             <Header />
 
             <div className="px-5 pt-5">
                 <h2 className="text-xl font-bold">Olá, Miguel!</h2>
-                <p className="capitalize text-sm">
-                    {format(new Date(), "EEEE',' dd 'de' MMMM", {
+                <p className="text-sm">
+                    <span className="capitalize">{format(currentDate, "EEEE", { locale: ptBR })}</span>
+                    {format(currentDate, "',' dd 'de '", {
                         locale: ptBR,
                     })}
+                    <span className="capitalize">{format(currentDate, "MMMM", { locale: ptBR })}</span>
                 </p>
             </div>
 
