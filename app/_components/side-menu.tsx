@@ -57,7 +57,7 @@ const SideMenu = () => {
 
                 {data?.user && (
                     <Button variant="outline" className="justify-start" asChild>
-                        <Link href="/booking">
+                        <Link href="/bookings">
                             <CalendarIcon />
                             Agendamentos
                         </Link>
