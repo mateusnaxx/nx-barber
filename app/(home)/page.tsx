@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Header from "../_components/header";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -57,7 +58,7 @@ export default async function Home() {
                 <Search />
             </div>
 
-            <div className="mt-6">
+            {/* <div className="mt-6">
                 {confirmedBookings.length > 0 && (
                     <>
                         <h2 className="px-5 text-xs mb-3 uppercase text-gray-400 font-bold">Agendamentos</h2>
@@ -69,9 +70,23 @@ export default async function Home() {
                         </div>
                     </>
                 )}
-            </div>
+            </div> */}
 
-            <div className="mt-6">
+            {/* SUSPENSE: Agendamentos */}
+            <Suspense fallback={<p className="px-5 text-gray-400 animate-pulse">Carregando agendamentos...</p>}>
+                {confirmedBookings.length > 0 && (
+                    <div className="mt-6">
+                        <h2 className="px-5 text-xs mb-3 uppercase text-gray-400 font-bold">Agendamentos</h2>
+                        <div className="px-5 flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+                            {confirmedBookings.map((booking) => (
+                                <BookingItem key={booking.id} booking={booking} />
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </Suspense>
+
+            {/* <div className="mt-6">
                 <h2 className="px-5 text-xs mb-3 uppercase text-gray-400 font-bold">Recomendados</h2>
 
                 <div className="flex px-5 gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
@@ -81,9 +96,23 @@ export default async function Home() {
                         </div>
                     ))}
                 </div>
-            </div>
+            </div> */}
 
-            <div className="mt-6 mb-[4.5rem]">
+            {/* SUSPENSE: Recomendados */}
+            <Suspense fallback={<p className="px-5 text-gray-400 animate-pulse">Carregando barbearias...</p>}>
+                <div className="mt-6">
+                    <h2 className="px-5 text-xs mb-3 uppercase text-gray-400 font-bold">Recomendados</h2>
+                    <div className="flex px-5 gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+                        {barbershop.map((b) => (
+                            <div key={b.id} className="min-w-[167px] max-w-[167px]">
+                                <BarbershopItem barbershop={b} />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </Suspense>
+
+            {/* <div className="mt-6 mb-[4.5rem]">
                 <h2 className="px-5 text-xs mb-3 uppercase text-gray-400 font-bold">Populares</h2>
 
                 <div className="flex px-5 gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
@@ -93,7 +122,21 @@ export default async function Home() {
                         </div>
                     ))}
                 </div>
-            </div>
+            </div> */}
+
+            {/* SUSPENSE: Populares */}
+            <Suspense fallback={<p className="px-5 text-gray-400 animate-pulse">Carregando populares...</p>}>
+                <div className="mt-6 mb-[4.5rem]">
+                    <h2 className="px-5 text-xs mb-3 uppercase text-gray-400 font-bold">Populares</h2>
+                    <div className="flex px-5 gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+                        {recommendedBarbershops.map((b) => (
+                            <div key={b.id} className="min-w-[167px] max-w-[167px]">
+                                <BarbershopItem barbershop={b} />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </Suspense>
         </div>
     );
 }
