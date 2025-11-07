@@ -13,8 +13,13 @@ export default async function Home() {
 
     const currentDate = new Date();
 
-    const [barbershop, confirmedBookings] = await Promise.all([
+    const [barbershop, recommendedBarbershops, confirmedBookings] = await Promise.all([
         db.barbershop.findMany({}),
+        db.barbershop.findMany({
+            orderBy: {
+                id: "asc",
+            },
+        }),
         session?.user
             ? db.booking.findMany({
                   where: {
@@ -36,7 +41,9 @@ export default async function Home() {
             <Header />
 
             <div className="px-5 pt-5">
-                <h2 className="text-xl font-bold">{session?.user ? `Olá, ${session.user.name?.split(" ")[0]}` : 'Olá, vamos agendar um corte hoje?'}</h2>
+                <h2 className="text-xl font-bold">
+                    {session?.user ? `Olá, ${session.user.name?.split(" ")[0]}` : "Olá, vamos agendar um corte hoje?"}
+                </h2>
                 <p className="text-sm">
                     <span className="capitalize">{format(currentDate, "EEEE", { locale: ptBR })}</span>
                     {format(currentDate, "',' dd 'de '", {
@@ -80,7 +87,7 @@ export default async function Home() {
                 <h2 className="px-5 text-xs mb-3 uppercase text-gray-400 font-bold">Populares</h2>
 
                 <div className="flex px-5 gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-                    {barbershop.map((barbershop) => (
+                    {recommendedBarbershops.map((barbershop) => (
                         <div key={barbershop.id} className="min-w-[167px] max-w-[167px]">
                             <BarbershopItem key={barbershop.id} barbershop={barbershop} />
                         </div>
