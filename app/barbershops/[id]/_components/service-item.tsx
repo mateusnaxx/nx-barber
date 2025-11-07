@@ -103,9 +103,22 @@ const ServiceItem = ({ service, isAutheticated, barbershop }: ServiceItemProps) 
         if (!date) {
             return [];
         }
+
         return generateDayTimeList(date).filter((time) => {
             const timeHour = Number(time.split(":")[0]);
             const timeMinutes = Number(time.split(":")[1]);
+
+            const isToday = new Date().toDateString() === date.toDateString();
+
+            if (isToday) {
+                const now = new Date();
+                const currentHour = now.getHours();
+                const currentMinutes = now.getMinutes();
+
+                if (timeHour < currentHour || (timeHour === currentHour && timeMinutes <= currentMinutes)) {
+                    return false;
+                }
+            }
 
             const booking = dayBookings.find((booking) => {
                 const bookingHour = booking.date.getHours();
@@ -155,7 +168,6 @@ const ServiceItem = ({ service, isAutheticated, barbershop }: ServiceItemProps) 
                                     </Button>
                                 </SheetTrigger>
 
-                                {/* <SheetContent className="p-0"> */}
                                 <SheetContent className="flex flex-col p-0">
                                     <SheetHeader className="text-left px-5 py-6 border-b border-solid border-secondary">
                                         <SheetTitle>Fazer reserva</SheetTitle>
