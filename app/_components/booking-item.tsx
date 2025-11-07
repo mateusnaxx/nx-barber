@@ -74,7 +74,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
                         <div className="flex flex-col items-center justify-center border-l flex-1 border-solid border-secondary">
                             <p className="text-sm capitalize">{format(booking.date, "MMMM", { locale: ptBR })}</p>
                             <p className="text-2xl">{format(booking.date, "dd")}</p>
-                            <p className="text-sm">{format(booking.date, "hh:mm")}</p>
+                            <p className="text-sm">{format(booking.date, "HH:mm")}</p>
                         </div>
                     </CardContent>
                 </Card>
@@ -138,7 +138,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
 
                             <div className="flex justify-between">
                                 <h3 className="font-sm text-gray-400">Horário</h3>
-                                <h4 className="text-sm">{format(booking.date, "hh:mm")}</h4>
+                                <h4 className="text-sm">{format(booking.date, "HH:mm")}</h4>
                             </div>
                         </CardContent>
                     </Card>
